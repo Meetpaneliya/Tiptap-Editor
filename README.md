@@ -2,6 +2,9 @@
 
 A professional document editor built with [Tiptap](https://tiptap.dev/) and React, featuring A4 pagination, headers/footers, manual and automatic page breaks, print-friendly styling, zoom, margin controls, watermark, and a page sidebar.
 
+**Live Demo:**  
+[https://willowy-sable-0d3520.netlify.app/](https://willowy-sable-0d3520.netlify.app/)
+
 ## Features
 
 - **A4 page layout** with visual boundaries
