@@ -1,0 +1,338 @@
+/* A4 Page Dimensions - Scaled for screen viewing */
+.document-container {
+  max-width: 794px; /* A4 width: 210mm * 3.78px/mm */
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Rulers */
+.horizontal-ruler {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  z-index: 10;
+}
+
+.vertical-ruler {
+  position: absolute;
+  top: 0;
+  left: -30px;
+  bottom: 0;
+  width: 30px;
+  background: #f8f9fa;
+  border-right: 1px solid #dee2e6;
+  z-index: 10;
+}
+
+.ruler-mark {
+  position: absolute;
+  font-size: 8px;
+  color: #666;
+  line-height: 1;
+}
+
+.horizontal-ruler .ruler-mark {
+  border-left: 1px solid #ccc;
+  height: 100%;
+  padding-top: 2px;
+  padding-left: 2px;
+}
+
+.vertical-ruler .ruler-mark {
+  border-top: 1px solid #ccc;
+  width: 100%;
+  padding-left: 2px;
+  padding-top: 2px;
+}
+
+.ruler-number {
+  font-size: 8px;
+  color: #666;
+}
+
+.ProseMirror {
+  outline: none;
+  font-family: 'Times New Roman', serif;
+  font-size: 12pt;
+  line-height: 1.6;
+  color: #000;
+  background: white;
+  position: relative;
+  min-height: 1123px; /* A4 height: 297mm * 3.78px/mm */
+  padding: var(--margin-top, 96px) var(--margin-right, 72px) var(--margin-bottom, 96px) var(--margin-left, 72px);
+  counter-reset: page-number 0;
+}
+
+/* Watermark */
+.ProseMirror::before {
+  content: var(--watermark-text, 'CONFIDENTIAL');
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  font-size: 72px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+  z-index: 1;
+  display: var(--show-watermark, block);
+  font-family: Arial, sans-serif;
+}
+
+/* Header and Footer */
+.document-container::before {
+  content: var(--header-text, 'Document Header') ' - Page ' counter(page-number, decimal);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--margin-left, 72px) 0 var(--margin-right, 72px);
+  font-size: 10pt;
+  color: #666;
+  z-index: 2;
+  counter-increment: page-number;
+}
+
+.document-container::after {
+  content: var(--footer-text, 'Document Footer') ' - Page ' counter(page-number, decimal);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--margin-left, 72px) 0 var(--margin-right, 72px);
+  font-size: 10pt;
+  color: #666;
+  z-index: 2;
+}
+
+/* Page breaks */
+.page-break {
+  page-break-before: always;
+  break-before: page;
+  height: 0;
+  border: none;
+  margin: 2em 0;
+  position: relative;
+}
+
+.page-break::before {
+  content: '--- Page Break ---';
+  position: absolute;
+  top: -0.5em;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 0 1em;
+  font-size: 10px;
+  color: #999;
+  border: 1px dashed #ddd;
+  border-radius: 4px;
+}
+
+/* Typography */
+.ProseMirror h1 {
+  font-size: 24pt;
+  font-weight: bold;
+  margin: 24pt 0 12pt 0;
+  line-height: 1.2;
+}
+
+.ProseMirror h2 {
+  font-size: 18pt;
+  font-weight: bold;
+  margin: 18pt 0 9pt 0;
+  line-height: 1.2;
+}
+
+.ProseMirror h3 {
+  font-size: 14pt;
+  font-weight: bold;
+  margin: 14pt 0 7pt 0;
+  line-height: 1.2;
+}
+
+.ProseMirror p {
+  margin: 0 0 12pt 0;
+  text-align: justify;
+}
+
+.ProseMirror ul, 
+.ProseMirror ol {
+  margin: 12pt 0;
+  padding-left: 36pt;
+}
+
+.ProseMirror li {
+  margin: 6pt 0;
+}
+
+.ProseMirror strong {
+  font-weight: bold;
+}
+
+.ProseMirror em {
+  font-style: italic;
+}
+
+.ProseMirror u {
+  text-decoration: underline;
+}
+
+/* Text alignment */
+.ProseMirror [style*="text-align: center"] {
+  text-align: center !important;
+}
+
+.ProseMirror [style*="text-align: right"] {
+  text-align: right !important;
+}
+
+.ProseMirror [style*="text-align: left"] {
+  text-align: left !important;
+}
+
+/* Print styles */
+@media print {
+ * {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important; /* Use this instead */
+}
+  
+  body {
+    background: white !important;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .document-container {
+    box-shadow: none;
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    page-break-inside: avoid;
+  }
+  
+  .ProseMirror {
+    font-size: 12pt;
+    padding: 1in 1in 1.5in 1in !important;
+    min-height: auto;
+    background: white;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  .page-break {
+    page-break-before: always;
+    break-before: page;
+    height: 0;
+    margin: 0;
+  }
+  
+  .page-break::before {
+    display: none;
+  }
+  
+  .document-container::before,
+  .document-container::after {
+    display: flex !important;
+    position: fixed;
+    background: white;
+    border: none;
+    font-size: 10pt;
+    width: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+  
+  .document-container::before {
+    top: 0.25in;
+    height: 0.5in;
+    padding: 0 1in;
+  }
+  
+  .document-container::after {
+    bottom: 0.25in;
+    height: 0.5in;
+    padding: 0 1in;
+  }
+  
+  /* Hide UI elements during print */
+  .bg-white,
+  .bg-gray-50,
+  .horizontal-ruler,
+  .vertical-ruler,
+  button,
+  .fixed {
+    display: none !important;
+  }
+  
+  /* Show only the document content */
+  .flex.h-screen.bg-gray-100 > div:first-child {
+    display: none !important;
+  }
+  
+  .flex-1.flex.flex-col > div:not(.flex-1.overflow-auto) {
+    display: none !important;
+  }
+  
+  .bg-gray-100 {
+    background: white !important;
+  }
+  
+  /* Ensure proper page margins for print */
+  @page {
+    margin: 0.5in 1in 1in 1in;
+    size: A4;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .document-container {
+    max-width: 100%;
+    margin: 0;
+    box-shadow: none;
+  }
+  
+  .ProseMirror {
+    padding: 48px 24px;
+    min-height: 800px;
+  }
+  
+  .document-container::before,
+  .document-container::after {
+    padding: 0 24px;
+    font-size: 9pt;
+  }
+  
+  .horizontal-ruler,
+  .vertical-ruler {
+    display: none;
+  }
+}
+
+/* Sidebar adjustments */
+@media (min-width: 1024px) {
+  .document-container {
+    margin-left: 0;
+  }
+}
